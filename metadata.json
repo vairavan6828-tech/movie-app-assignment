@@ -1,0 +1,6 @@
+{
+  "name": "Movie Catalog",
+  "description": "A simple fullstack movie browsing and details catalog application loaded from local metadata.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
