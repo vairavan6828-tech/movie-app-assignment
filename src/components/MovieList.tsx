@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion } from "motion/react";
 import { Search, Film, Star, ArrowUpRight, RotateCcw } from "lucide-react";
 import { Movie } from "../types";
+import { getMoviePoster } from "../movie_posters";
 
 interface MovieListProps {
   onSelectMovie: (id: string) => void;
@@ -188,14 +189,25 @@ export default function MovieList({ onSelectMovie }: MovieListProps) {
               id={`movie-card-${movie.id}`}
             >
               {/* Card Poster Representation */}
-              <div className="relative aspect-[16/10] bg-gradient-to-br from-[#0c0c0d] to-[#18181b] flex flex-col justify-end p-4 border-b border-[#27272a] transition-all">
+              <div className="relative aspect-[16/10] bg-[#0c0c0d] flex flex-col justify-end p-4 border-b border-[#27272a] overflow-hidden transition-all">
+                {/* Real-world representative stock/poster image above the movie details */}
+                <img
+                  src={getMoviePoster(movie.id)}
+                  alt={`${movie.title} Poster`}
+                  className="absolute inset-0 w-full h-full object-cover opacity-75 group-hover:opacity-95 group-hover:scale-105 transition-all duration-300 z-0"
+                  referrerPolicy="no-referrer"
+                />
+
+                {/* Ambient dark gradient overlay to keep badges and text highly legible */}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0b] via-[#0a0a0b]/40 to-transparent z-10" />
+
                 {/* Visual Icon Accent */}
-                <div className="absolute top-3 left-3 bg-[#111112]/90 border border-[#27272a] p-2 rounded-lg text-[#71717a] group-hover:text-[#ef4444] transition-colors">
+                <div className="absolute top-3 left-3 bg-[#111112]/92 border border-[#27272a] p-2 rounded-lg text-[#71717a] group-hover:text-[#ef4444] transition-colors z-20">
                   <Film className="w-4 h-4" />
                 </div>
 
                 {/* Rating Badge */}
-                <div className="absolute top-3 right-3 bg-[rgba(229,9,20,0.1)] border border-[#ef4444]/20 px-2 py-1 rounded flex items-center gap-1 shadow-md">
+                <div className="absolute top-3 right-3 bg-[rgba(10,10,11,0.85)] backdrop-blur border border-[#ef4444]/20 px-2 py-1 rounded flex items-center gap-1 shadow-md z-20">
                   <Star className="w-3.5 h-3.5 text-[#ef4444] fill-[#ef4444]" />
                   <span className="text-xs font-mono font-bold text-[#ef4444]">
                     {movie.vote_average.toFixed(1)}
@@ -203,11 +215,11 @@ export default function MovieList({ onSelectMovie }: MovieListProps) {
                 </div>
 
                 {/* Genres minimal strip */}
-                <div className="flex flex-wrap gap-1.5 pointer-events-none mb-1">
+                <div className="flex flex-wrap gap-1.5 pointer-events-none mb-1 z-25 relative">
                   {movie.genres.map((genre) => (
                     <span
                       key={genre}
-                      className="text-[10px] font-semibold text-[#a1a1aa] bg-[#27272a] px-2 py-0.5 rounded"
+                      className="text-[10px] font-semibold text-[#a1a1aa] bg-[#27272a]/90 backdrop-blur px-2 py-0.5 rounded"
                     >
                       {genre}
                     </span>

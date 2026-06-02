@@ -1,3 +1,11 @@
+export interface Review {
+  id: string;
+  movieId: string;
+  author: string;
+  content: string;
+  timestamp: string;
+}
+
 export interface Movie {
   id: string;
   title: string;
@@ -11,6 +19,8 @@ export interface Movie {
   vote_count?: number;
   budget?: number;
   revenue?: number;
+  trailer_url?: string;
+  reviews?: Review[];
 }
 
 export interface ApiMovieListResponse {
